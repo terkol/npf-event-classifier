@@ -1,18 +1,8 @@
-import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import PowerTransformer
-
-path = os.path.dirname(__file__)
-
-train = pd.read_csv(path+'\\train.csv')
-train = train.drop(columns=['date', 'partlybad']).set_index('id')
-train['class4'] = train['class4'].map({'II': 3, 'Ia': 2, 'Ib': 1, 'nonevent': 0})
-
-X = train.drop(columns='class4')
-y = train['class4']
+from pathlib import Path
 
 def histograms(X, y):
     fig, axes = plt.subplots(10, 10, figsize=(18,10))
@@ -59,16 +49,28 @@ def covariances(X, y):
     high_cov = cov_y[abs(cov_y)>0.2]
     print(high_cov.index)
 
-    # fig, ax = plt.subplots(1,2, figsize=(14,6))
-    # ax[0].set_title('Correlation histogram')
-    # ax[0].hist(cov_y, bins=20)
-    # ax[0].set_ylabel('n')
-    # ax[0].set_xlabel("Correlation with 'class2'")
-    # ax[1].set_title('Correlation histogram')
-    # ax[1].grid()
-    # ax[1].scatter(list(range(len(cov_y))),cov_y)
-    # ax[1].set_ylabel("Correlation with 'class2'")
-    # ax[1].set_xlabel('Spot in intrinsic order')
-    # plt.show()
+    fig, ax = plt.subplots(1,2, figsize=(14,6))
+    ax[0].set_title('Correlation histogram')
+    ax[0].hist(cov_y, bins=20)
+    ax[0].set_ylabel('n')
+    ax[0].set_xlabel("Correlation with 'class2'")
+    ax[1].set_title('Correlation histogram')
+    ax[1].grid()
+    ax[1].scatter(list(range(len(cov_y))),cov_y)
+    ax[1].set_ylabel("Correlation with 'class2'")
+    ax[1].set_xlabel('Spot in intrinsic order')
+    plt.show()
 
 
+if __name__ == "__main__":
+    path = Path(__file__).parent.parent / "data"
+
+    train = pd.read_csv(path / 'train.csv')
+    train = train.drop(columns=['date', 'partlybad']).set_index('id')
+    train['class4'] = train['class4'].map({'II': 3, 'Ia': 2, 'Ib': 1, 'nonevent': 0})
+
+    X = train.drop(columns='class4')
+    y = train['class4']
+    histograms(X, y)
+    histograms_binary(X, y)
+    covariances(X, y)
