@@ -11,4 +11,4 @@ To ensure the model learned the underlying physical chemistry rather than simply
 ### Full Methodology & Results
 **Please refer to the attached PDF report in this repository for the complete data analysis, methodology, and scientific conclusions.** 
 
-The Python source code used for data processing and model training is housed in `src` for the sake of reproducibility, though the main deliverable of this project is the report `Project-Report.pdf`. 
+The Python source code used for data processing and model training is housed in `src` for the sake of reproducibility, though the main deliverable of this project is the report `NPF-Project-Report.pdf`. 
